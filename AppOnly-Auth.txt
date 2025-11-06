@@ -1,0 +1,46 @@
+How to get the AppOnly Authentication working: 
+
+# 1. Create the certificate using PowerShell:
+
+$cert = New-SelfSignedCertificate `
+  -Subject "CN=EntraAuthReport" `
+  -CertStoreLocation "Cert:\CurrentUser\My" `
+  -KeyExportPolicy Exportable `
+  -KeySpec Signature `
+  -KeyLength 2048 `
+  -NotAfter (Get-Date).AddYears(2)
+
+# 2. Get the CertificateThumbprint:
+
+$cert.Thumbprint
+
+Copy this value for use in your script and Azure portal.
+
+# 3. Export the Certificate (Public Key) for Azure:
+
+Export-Certificate -Cert $cert -FilePath "$env:TEMP\EntraAuthReport.cer"
+
+# 4. Register an Azure AD App
+
+Go to <https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade> and:
+
+*   Create a new app
+*   Note the **Application (client) ID** and **Directory (tenant) ID**
+*   Add a **client secret** or upload a **certificate**
+
+# 5. Assign API Permissions
+
+Under **API permissions**:
+
+*   Add Microsoft Graph permissions:
+    *   `AuditLog.Read.All`
+    *   `Directory.Read.All`
+    *   `Reports.Read.All`
+    *   `Policy.Read.All`
+*   Make sure they are **Application** permissions
+*   Click **Grant admin consent**
+
+# 6. Upload the Certificate
+
+Upload the exported .cer file to your Azure AD App Registration under:
+Certificates & Secrets > Certificates > Upload certificate
