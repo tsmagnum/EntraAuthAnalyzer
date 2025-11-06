@@ -146,3 +146,7 @@ This script:
 Make sure the filename matches the value of `$encryptedSMTPCredsFileName` in `GlobalVariables.ps1`.
 
 ---
+
+## ⚠️ Disclaimer
+
+These scripts are provided **"as-is"**, without any express or implied warranties. The author assumes **no responsibility or liability** for any errors, issues, or damages that may arise from its use. By running these scripts, you acknowledge that you do so **at your own risk** and that you are solely responsible for ensuring it complies with your organization's policies and security standards.
